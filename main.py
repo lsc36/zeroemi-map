@@ -20,10 +20,12 @@ def main():
     for shop in shops:
         gc = gmaps.geocode(shop['address'])
         if len(gc) == 0:
-            log.error('shop %s has no matching locations', shop['name'])
+            log.error('shop %s (%s) has no matching locations',
+                      shop['name'], shop['address'])
             continue
         if len(gc) != 1:
-            log.warning('shop %s has %s matching locations', shop['name'], len(gc))
+            log.warning('shop %s (%s) has %s matching locations',
+                        shop['name'], shop('address'), len(gc))
         loc = gc[0]['geometry']['location']
         kml.newpoint(name=shop['name'], coords=[(loc['lng'], loc['lat'])])
 
