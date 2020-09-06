@@ -7,14 +7,12 @@ import config
 import crawler
 
 
-logging.basicConfig()
+logging.basicConfig(level=logging.INFO)
 log = logging.getLogger(__name__)
-log.setLevel(logging.INFO)
 
 
 def main():
     shops = crawler.shop_list()
-    log.info('found %s shops', len(shops))
 
     gmaps = googlemaps.Client(key=config.GOOGLEMAPS_API_KEY)
     kml = simplekml.Kml()
@@ -25,7 +23,7 @@ def main():
             log.error('shop %s has no matching locations', shop['name'])
             continue
         if len(gc) != 1:
-            log.warn('shop %s has %s matching locations', shop['name'], len(gc))
+            log.warning('shop %s has %s matching locations', shop['name'], len(gc))
         loc = gc[0]['geometry']['location']
         kml.newpoint(name=shop['name'], coords=[(loc['lng'], loc['lat'])])
 
