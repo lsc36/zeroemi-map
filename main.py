@@ -27,7 +27,9 @@ def main():
             log.warning('shop %s (%s) has %s matching locations',
                         shop['name'], shop('address'), len(gc))
         loc = gc[0]['geometry']['location']
-        kml.newpoint(name=shop['name'], coords=[(loc['lng'], loc['lat'])])
+        kml.newpoint(name=shop['name'],
+                     description=shop['address'],
+                     coords=[(loc['lng'], loc['lat'])])
 
     out = 'zeroemi_map.kml'
     log.info('writing output to %s', out)
